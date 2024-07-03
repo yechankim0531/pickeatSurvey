@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     startButton.addEventListener('click', function() {
         // Redirect to the survey.html page when the button is clicked
         window.location.href = 'user.html';
+        
     });
 
 });
@@ -22,5 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
     nextBtn.addEventListener('click', function() {
         // Redirect to the survey.html page when the button is clicked
         window.location.href = 'question.html';
+       
     });
 });
