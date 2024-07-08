@@ -1,4 +1,5 @@
 const startButton = document.getElementById('startSurvey');
+const next = document.getElementById('next');
 const nextBtn = document.getElementById('nextBtn');
 
 
@@ -10,59 +11,80 @@ const a2 = ["Neutral", "Just right"];
 const a3 = ["Slightly Like", "Slightly Sweet"];
 const a4 = ["Moderatly Like", "Sweet"];
 const a5 = ["Strongly Like", "Very Sweet"];
-let currentQuestion=0;
+let currentQuestion = -1;
 
-function loadNewPage(question, option1, option2, option3, option4, option5){
-    const q = document.getElementById("question")
-    const a1 = document.getElementById("a1")
-    const a2 = document.getElementById("a2")
-    const a3 = document.getElementById("a3")
-    const a4 = document.getElementById("a4")
-    const a5 = document.getElementById("a5")
-    
-    q.innerText = question
-    console.log(q.innerText)
-    a1.innerText= option1
-    a2.innerText= option2
-    a3.innerText= option3
-    a4.innerText= option4
-    a5.innerText= option5
-    window.location.href = 'question.html';
-    
+function loadNewPage() {
+    document.getElementById("question").innerText = questions[currentQuestion];
+    document.getElementById("a1").innerText = a1[currentQuestion];
+    document.getElementById("a2").innerText = a2[currentQuestion];
+    document.getElementById("a3").innerText = a3[currentQuestion];
+    document.getElementById("a4").innerText = a4[currentQuestion];
+    document.getElementById("a5").innerText = a5[currentQuestion];
+
+
 }
-document.addEventListener('DOMContentLoaded', function() {
-    if(startButton){
-        startButton.addEventListener('click', function() {
+document.addEventListener('DOMContentLoaded', function () {
+    if (startButton) {
+        startButton.addEventListener('click', function () {
             // Redirect to the survey.html page when the button is clicked
             console.log("BH")
             window.location.href = 'user.html';
-            
-            
-        });
-    }
-    
-    if(nextBtn){
-        nextBtn.addEventListener('click', function() {
-            window.location.href = 'question.html';
-            //console.log(questions[currentQuestion],a1[currentQuestion],a2[currentQuestion],a3[currentQuestion],a4[currentQuestion],a5[currentQuestion])
-            window.onload = loadNewPage(questions[currentQuestion],a1[currentQuestion],a2[currentQuestion],a3[currentQuestion],a4[currentQuestion],a5[currentQuestion]);
-            currentQuestion++;
-            
+
+
         });
     }
 
-    if(prevBtn){
-        prevBtn.addEventListener('click', function() {
-            window.location.href = 'user.html';
+    if (next) {
+        next.addEventListener('click', function () {
+            
+            window.location.href = 'question.html';
+          
         });
     }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+            currentQuestion++;
+            loadNewPage();
+            
+          
+        });
+    }
+
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function () {
+            if(currentQuestion==-1){
+                window.location.href = 'user.html';
+            }
+            else if(currentQuestion==0){
+                window.location.href = 'question.html';
+            }
+            else{
+                
+                    currentQuestion--;
+                    loadNewPage();
+                
+            }
+            
+        });
+
+       
+        
+        
+    }
+
+    const path = window.location.pathname;
+
+    // Check if the pathname ends with '/question.html'
+  
 
 });
 
-   
 
-   
-    
-   
-    
+
+
+
+
+
 
