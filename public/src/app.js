@@ -36,56 +36,50 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (next) {
         next.addEventListener('click', function () {
-            
+
             window.location.href = 'question.html';
-          
+
         });
     }
 
     if (nextBtn) {
-        if (currentQuestion<questions.length){
-            nextBtn.addEventListener('click', function () {
-                console.log(currentQuestion)
-                currentQuestion++;
-                loadNewPage();
-                
-              
-            });
-        }
-        else{
-            nextBtn.addEventListener('click', function () {
-                window.location.href= 'end.html';
-                
-              
-            });
+        nextBtn.addEventListener('click', function () {
             
-        }
-        
+
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadNewPage();
+            }
+            else {
+                window.location.href = 'end.html';
+            }
+        });
+       
+
     }
 
 
     if (prevBtn) {
         prevBtn.addEventListener('click', function () {
-            if(currentQuestion==-1){
+            if (currentQuestion == -1) {
                 window.location.href = 'user.html';
             }
-            else if(currentQuestion==0){
+            else if (currentQuestion == 0) {
                 window.location.href = 'question.html';
             }
-            else{
-                
-                    currentQuestion--;
-                    loadNewPage();
-                
+            else {
+
+                currentQuestion--;
+                loadNewPage();
             }
-            
+
         });
 
-       
-        
-        
+
+
+
     }
-  
+
 
 });
 
