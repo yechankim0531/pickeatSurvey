@@ -16,6 +16,10 @@ app.get('/user', function(req, res){
     res.sendFile(path.join(__dirname, 'src', 'user.html')); // Serve user.html for the /user route
 });
 
+app.get('/end', function(req, res){
+    res.sendFile(path.join(__dirname, 'src', 'end.html')); // Serve user.html for the /user route
+});
+
 app.listen(8080, () => {
     console.log('Server is listening on port 8080');
 });

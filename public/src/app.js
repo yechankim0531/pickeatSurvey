@@ -43,12 +43,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (nextBtn) {
-        nextBtn.addEventListener('click', function () {
-            currentQuestion++;
-            loadNewPage();
+        if (currentQuestion<questions.length){
+            nextBtn.addEventListener('click', function () {
+                console.log(currentQuestion)
+                currentQuestion++;
+                loadNewPage();
+                
+              
+            });
+        }
+        else{
+            nextBtn.addEventListener('click', function () {
+                window.location.href= 'end.html';
+                
+              
+            });
             
-          
-        });
+        }
+        
     }
 
 
@@ -73,10 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
         
         
     }
-
-    const path = window.location.pathname;
-
-    // Check if the pathname ends with '/question.html'
   
 
 });
