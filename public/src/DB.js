@@ -11,7 +11,7 @@ const pool = new Pool({
 
 
 async function fetchQuestions(){
-    const queryText = "SELECT * FROM survey_questions";
+    const queryText = "SELECT * FROM survey_questions ORDER BY question_id";
     const client = await pool.connect();
     try {
         const res = await client.query(queryText);
@@ -22,6 +22,7 @@ async function fetchQuestions(){
             surveyQuestions[i].choices = list
 
         }
+        //console.log(surveyQuestions)
         return surveyQuestions;
         
     } catch (err) {
@@ -53,3 +54,6 @@ module.exports = {
     writeAnswers
 };
 
+
+
+//fetchQuestions();

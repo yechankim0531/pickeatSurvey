@@ -1,21 +1,38 @@
+
+
+
+
+// const {load5choice} = require('./load5choice.js')
+// const {loadMultiplechoice} = require('./loadMultiplechoice.js')
+
+// const { text } = require("express");
+
+
 const startButton = document.getElementById('startSurvey');
 const next = document.getElementById('next');
 const nextBtn = document.getElementById('nextBtn');
 const prevBtn = document.getElementById('prevBtn');
 
+let currentQuestion = 0;
+let questions = [];
 
 
-const type = ["pref", "taste", "pref", "health","aroma", "texture", ]
-const questions = ["How much do you like sweet", "How sweet do you find Skippy Peanut Butter","How much do you like saltiness", "Do you have allergies?"];
-const a1 = ["Prefer Less", "Barley Sweet", "Prefer Less"];
-const a2 = ["Neutral", "Just right", "Neutral"];
-const a3 = ["Slightly Like", "Slightly Sweet", "Slightly Like"];
-const a4 = ["Moderatly Like", "Sweet", "Moderatly Like"];
-const a5 = ["Strongly Like", "Very Sweet", "Strongly Like"];
+async function fetchQuestions() {
+    try {
+        let response = await fetch('/api/data/questions');
+        questions = await response.json();
+    } catch (err) {
+        console.log('Error Fetching Questions');
+        console.log(err);
+    }
+}
 
-let currentQuestion = -1;
 
-function load5choice() {
+
+
+
+
+function load5choice(questions, currentQuestion) {
     const form = document.getElementById('answerChoice')
     const foodPic = document.getElementById('foodPic')
     form.innerHTML = '';
@@ -39,7 +56,7 @@ function load5choice() {
         container.append(radioInput, label)
         form.append(container)
     }
-    if(type[currentQuestion]==="taste"){
+    if(questions[currentQuestion].type==="taste"){
         const image = document.createElement('img');
         image.id="foodimg"
         image.src = "https://target.scene7.com/is/image/Target/GUEST_1c812756-196e-4286-bce3-5f6f2a9a4067?wid=488&hei=488&fmt=pjpeg"
@@ -50,22 +67,20 @@ function load5choice() {
     
             
     
-    document.getElementById("question").innerText = questions[currentQuestion];
-    document.getElementById("a1").innerText = a1[currentQuestion];
-    document.getElementById("a2").innerText = a2[currentQuestion];
-    document.getElementById("a3").innerText = a3[currentQuestion];
-    document.getElementById("a4").innerText = a4[currentQuestion];
-    document.getElementById("a5").innerText = a5[currentQuestion];
+    document.getElementById("question").innerText = questions[currentQuestion].question;
+    const choice = questions[currentQuestion].choices
+    console.log(choice)
+    document.getElementById("a1").innerText = choice[0];
+    document.getElementById("a2").innerText = choice[1]
+    document.getElementById("a3").innerText = choice[2]
+    document.getElementById("a4").innerText = choice[3]
+    document.getElementById("a5").innerText = choice[4]
 
 
 }
 
-
-
-
-const choice= ["None", "Shells", "Milk", "Peanuts", "Walnuts", "Fish", "Pork"]
-
-function loadMultiplechoice() {
+function loadMultiplechoice(questions, currentQuestion) {
+    const choice = questions[currentQuestion].choices
     const form = document.getElementById('answerChoice')
     form.innerHTML = '';
     
@@ -97,20 +112,38 @@ function loadMultiplechoice() {
     form.append(container)
     
 }
-document.getElementById("question").innerText = questions[currentQuestion];
+document.getElementById("question").innerText = questions[currentQuestion].question;
+}
+
+
+function loadBMI(questions, currentQuestion) {
+    const form = document.getElementById('answerChoice');
+    document.getElementById("question").innerText = questions[currentQuestion].question;
+    
+    form.innerHTML = `
+        <div class="input-data">
+            <input type="text" required id="height">
+            <div class="underline"></div>
+            <label for="height">Height</label>
+        </div>
+        <div class="input-data">
+            <input type="text" required id="weight">
+            <div class="underline"></div>
+            <label for="weight">Weight</label>
+        </div>`;
 }
 
 
 
 
+document.addEventListener('DOMContentLoaded', async  function () {
+    await fetchQuestions();
+    fetchQuestions().then(() => {
+        console.log(questions)
+    });
 
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
     if (startButton) {
         startButton.addEventListener('click', function () {
-            
             
             window.location.href = 'user.html';
 
@@ -130,17 +163,22 @@ document.addEventListener('DOMContentLoaded', function () {
         nextBtn.addEventListener('click', function () {
             currentQuestion++;
             if (currentQuestion < questions.length) {
-                console.log(type[currentQuestion])
-                if(type[currentQuestion]==="health"){
-                    loadMultiplechoice();
+                console.log(questions[currentQuestion])
+                
+                if(questions[currentQuestion].type==="health" || questions[currentQuestion].type==="restriction"){
+                    loadMultiplechoice(questions,currentQuestion);
+                }
+                else if(questions[currentQuestion].type==="BMI"){
+                    loadBMI(questions, currentQuestion)
                 }
                 else{
-                    load5choice();
+                    load5choice(questions,currentQuestion);
                 }
                 
             }
             else {
                 window.location.href = 'end.html';
+                
             }
         });
        
@@ -150,21 +188,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (prevBtn) {
         prevBtn.addEventListener('click', function () {
-            if (currentQuestion == -1) {
+            
+            if (currentQuestion == 0) {
                 window.location.href = 'user.html';
             }
-            else if (currentQuestion == 0) {
+            else if (currentQuestion == 1) {
                 window.location.href = 'question.html';
             }
             else {
 
                 currentQuestion--;
 
-                if(type[currentQuestion]==="Health"){
-                    loadMultiplechoice();
+                if(questions[currentQuestion].type==="health"){
+                    loadMultiplechoice(questions,currentQuestion);
                 }
                 else{
-                    load5choice();
+                    load5choice(questions,currentQuestion);
                 }
             }
 
