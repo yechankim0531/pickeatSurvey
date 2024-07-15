@@ -44,9 +44,11 @@ function load5choice(questions, currentQuestion) {
     document.getElementById("a4").innerText = choice[3]
     document.getElementById("a5").innerText = choice[4]
 
-    // Array.from(form.elements).forEach((input) => {
-        
-    // });
+    
+    const value = getCookie(`q${currentQuestion+1}`)
+    const answer = document.getElementById(`choice${value}`) 
+    answer.checked = true;
+    
 
 }
 
@@ -66,7 +68,7 @@ function loadMultiplechoice(questions, currentQuestion) {
         }    
         const option = document.createElement('input');
         option.type = 'checkbox'
-        option.name = choice[j]
+        option.name = `q${currentQuestion+1}`
         option.id = choice[j]
         option.value= choice[j]
 
@@ -84,6 +86,9 @@ function loadMultiplechoice(questions, currentQuestion) {
     
 }
 document.getElementById("question").innerText = questions[currentQuestion].question;
+
+
+
 }
 
 
@@ -118,7 +123,7 @@ function loadHabit(questions, currentQuestion){
         
         const option = document.createElement('input');
         option.type = 'radio'
-        option.name = "answer"
+        option.name = `q${currentQuestion+1}`
         option.id = choice[i]
         option.value= choice[i]
 
@@ -133,6 +138,10 @@ function loadHabit(questions, currentQuestion){
         
     }
     form.append(container)
+
+    const value = getCookie(`q${currentQuestion+1}`)
+    const answer = document.getElementById(value) 
+    answer.checked = true;
     
 }
 
