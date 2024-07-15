@@ -215,10 +215,13 @@ input[type='checkbox']{
   display: none;
   cursor: pointer;
   
-  
-  
 }
 
+
+.mChoice input[type = 'radio']{
+  display: none;
+  cursor: pointer;
+}
 .mChoice label {
   display: flex;
   padding: 0.7rem 1.5rem;
@@ -232,6 +235,11 @@ input[type='checkbox']{
 }
 
  input[type="checkbox"]:checked + label {
+  border: 2px solid #EA185E;
+  color: #EA185E;
+  
+}
+.mChoice input[type="radio"]:checked + label {
   border: 2px solid #EA185E;
   color: #EA185E;
   
