@@ -13,9 +13,20 @@ populateCookieMap();
 
 function getInput(){
     const form = document.querySelector('form')
+    console.log(form.id)
     const fd = new FormData(form)
-   
-    const obj = Object.fromEntries(fd)
+    const obj = {}
+    fd.forEach((value, key) => {
+        if (obj[key]) {
+            if (!Array.isArray(obj[key])) {
+                obj[key] = [obj[key]]
+            }
+            obj[key].push(value)
+        } else {
+            obj[key] = value
+        }
+    })
+    console.log(obj)
     const json = JSON.stringify(obj)
     console.log(json)
     return json

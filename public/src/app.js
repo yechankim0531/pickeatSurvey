@@ -12,8 +12,11 @@ const startButton = document.getElementById('startSurvey');
 const next = document.getElementById('next');
 const nextBtn = document.getElementById('nextBtn');
 const prevBtn = document.getElementById('prevBtn');
+// const { performance } = require('perf_hooks');
 
 let currentQuestion = 0;
+let startTime;
+let endTime;
 let questions = [];
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -50,11 +53,14 @@ document.addEventListener('DOMContentLoaded', async function () {
             setCookie(7)
             
             window.location.href = 'question.html';
+            // startTime= performance.now();
         });
     }
 
     if (nextBtn) {
         nextBtn.addEventListener('click', function () {
+            endTime=performance.now();
+            console.log(endTime-startTime)
             setCookie(7)
             currentQuestion++;
             if (currentQuestion < questions.length) {
@@ -63,11 +69,13 @@ document.addEventListener('DOMContentLoaded', async function () {
             } else {
                 window.location.href = 'end.html';
             }
+            // startTime=performance.now
         });
     }
 
     if (prevBtn) {
         prevBtn.addEventListener('click', function () {
+            setCookie(7)
             if (currentQuestion === 0) {
                 window.location.href = 'user.html';
             } else {
@@ -80,6 +88,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 function loadCurrentQuestion() {
+
     if (!questions[currentQuestion]) {
         return;
     }
@@ -104,6 +113,7 @@ async function fetchQuestions() {
     try {
         let response = await fetch('/api/data/questions');
         questions = await response.json();
+        
     } catch (err) {
         console.log('Error Fetching Questions');
         console.log(err);

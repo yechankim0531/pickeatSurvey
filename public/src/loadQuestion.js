@@ -46,6 +46,7 @@ function load5choice(questions, currentQuestion) {
 
     
     const value = getCookie(`q${currentQuestion+1}`)
+  
     const answer = document.getElementById(`choice${value}`) 
     answer.checked = true;
     
@@ -87,9 +88,27 @@ function loadMultiplechoice(questions, currentQuestion) {
 }
 document.getElementById("question").innerText = questions[currentQuestion].question;
 
+const values = getCookie(`q${currentQuestion+1}`)
 
+console.log(typeof values)
+console.log(values)
+
+
+if (values) {
+    let valArray;
+    if (typeof values === 'object') {
+        valArray = values;
+    } else {
+        valArray = values.split(",")
+    }
+    valArray.forEach(val=>{
+        const answer = document.getElementById(val) 
+        answer.checked = true;
+        })
+}
 
 }
+
 
 
 function loadBMI(questions, currentQuestion) {
@@ -98,15 +117,22 @@ function loadBMI(questions, currentQuestion) {
     
     form.innerHTML = `
         <div class="input-data">
-            <input type="text" required id="height">
+            <input type="text" placeholder="Height"required id="height" name= "height">
             <div class="underline"></div>
-            <label for="height">Height</label>
         </div>
+        <label for="height">CM</label>
         <div class="input-data">
-            <input type="text" required id="weight">
+            <input type="text" placeholder="Weight" required id="weight" name= "weight">
             <div class="underline"></div>
-            <label for="weight">Weight</label>
-        </div>`;
+            
+        </div>
+        <label for="weight">KG</label>
+        `;
+    
+    loadUser();
+    
+
+    
 }
 
 function loadHabit(questions, currentQuestion){
