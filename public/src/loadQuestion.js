@@ -46,9 +46,11 @@ function load5choice(questions, currentQuestion) {
 
     
     const value = getCookie(`q${currentQuestion+1}`)
-  
-    const answer = document.getElementById(`choice${value}`) 
-    answer.checked = true;
+    if(value){
+        const answer = document.getElementById(`choice${value}`) 
+        answer.checked = true;
+    }
+    
     
 
 }

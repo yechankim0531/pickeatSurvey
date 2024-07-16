@@ -13,7 +13,7 @@ populateCookieMap();
 
 function getInput(){
     const form = document.querySelector('form')
-    console.log(form.id)
+    //console.log(form.id)
     const fd = new FormData(form)
     const obj = {}
     fd.forEach((value, key) => {
@@ -26,9 +26,9 @@ function getInput(){
             obj[key] = value
         }
     })
-    console.log(obj)
+    //console.log(obj)
     const json = JSON.stringify(obj)
-    console.log(json)
+    //console.log(json)
     return json
 }
 
