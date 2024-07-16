@@ -12,6 +12,8 @@ const startButton = document.getElementById('startSurvey');
 const next = document.getElementById('next');
 const nextBtn = document.getElementById('nextBtn');
 const prevBtn = document.getElementById('prevBtn');
+
+
 // const { performance } = require('perf_hooks');
 
 let currentQuestion = 0;
@@ -50,28 +52,36 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (next) {
         loadUser();
         next.addEventListener('click', function () {
+          
             setCookie(7)
             
             window.location.href = 'question.html';
-            startTime=new Date();
+            
         });
     }
 
     if (nextBtn) {
+        if (currentQuestion===0){
+            startTime=new Date();
+        }
         nextBtn.addEventListener('click', function () {
             endTime=new Date();
-            console.log(endTime-startTime)
+            setTime(7)
             setCookie(7)
             currentQuestion++;
             if (currentQuestion < questions.length) {
                 updateURL();
                 loadCurrentQuestion();
+              
             } else {
                 window.location.href = 'end.html';
             }
             startTime=new Date();
+            
         });
-    }
+        
+        }
+        
 
     if (prevBtn) {
         prevBtn.addEventListener('click', function () {
@@ -82,9 +92,14 @@ document.addEventListener('DOMContentLoaded', async function () {
                 currentQuestion--;
                 updateURL();
                 loadCurrentQuestion();
+                
             }
         });
     }
+
+
+    
+   
 });
 
 function loadCurrentQuestion() {
@@ -102,6 +117,8 @@ function loadCurrentQuestion() {
     } else {
         load5choice(questions, currentQuestion);
     }
+    loadExtra();
+    
     updateProgress()
 }
 
@@ -112,9 +129,11 @@ function updateURL() {
 function updateProgress(){
     const progressbar = document.getElementById('progress-bar');
     let progress = ((currentQuestion+1)/questions.length)*100
-    console.log(progress)
+    //console.log(progress)
     progressbar.style.width = `${progress}%`
 }
+
+
 
 async function fetchQuestions() {
     try {
@@ -126,5 +145,6 @@ async function fetchQuestions() {
         console.log(err);
     }
 }
+
 
 

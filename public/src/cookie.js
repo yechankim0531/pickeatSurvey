@@ -56,6 +56,35 @@ function setCookie(days) {
     
    
   }
+function setTime(days) {
+    const time = endTime - startTime
+    
+    const set = (value) => {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + date.toUTCString();
+        document.cookie = "time" + "=" + value + ";" + expires + ";path=/";
+        cookiemap["time"] = value
+    }
+
+    if (!cookiemap["time"]) {
+        cookiemap["time"] = []
+        cookiemap["time"][currentQuestion] = time
+        
+    }
+    else {
+        if(!cookiemap["time"][currentQuestion]){
+            cookiemap["time"][currentQuestion]=time
+        }
+       
+    }
+    set(cookiemap["time"]);
+
+}
+   
+
+
+
 
 function getCookie(name) {
     return cookiemap[name] || null;

@@ -37,7 +37,7 @@ function load5choice(questions, currentQuestion) {
     
     document.getElementById("question").innerText = questions[currentQuestion].question;
     const choice = questions[currentQuestion].choices
-    console.log(choice)
+    //console.log(choice)
     document.getElementById("a1").innerText = choice[0];
     document.getElementById("a2").innerText = choice[1]
     document.getElementById("a3").innerText = choice[2]
@@ -48,7 +48,7 @@ function load5choice(questions, currentQuestion) {
     const value = getCookie(`q${currentQuestion+1}`)
     if(value){
         const answer = document.getElementById(`choice${value}`) 
-        answer.checked = true;
+        answer.checked = "checked";
     }
     
     
@@ -92,8 +92,8 @@ document.getElementById("question").innerText = questions[currentQuestion].quest
 
 const values = getCookie(`q${currentQuestion+1}`)
 
-console.log(typeof values)
-console.log(values)
+//console.log(typeof values)
+//console.log(values)
 
 
 if (values) {
@@ -105,7 +105,7 @@ if (values) {
     }
     valArray.forEach(val=>{
         const answer = document.getElementById(val) 
-        answer.checked = true;
+        answer.checked = "checked";
         })
 }
 
@@ -128,6 +128,7 @@ function loadBMI(questions, currentQuestion) {
             <div class="underline"></div>
             
         </div>
+        
         <label for="weight">KG</label>
         `;
     
@@ -136,6 +137,7 @@ function loadBMI(questions, currentQuestion) {
 
     
 }
+
 
 function loadHabit(questions, currentQuestion){
     const choice = questions[currentQuestion].choices
@@ -169,7 +171,7 @@ function loadHabit(questions, currentQuestion){
 
     const value = getCookie(`q${currentQuestion+1}`)
     const answer = document.getElementById(value) 
-    answer.checked = true;
+    answer.checked = "checked";
     
 }
 
@@ -186,4 +188,39 @@ function loadUser() {
             }
         }
     });
+}
+
+function loadExtra(){
+    
+    const otherCheckbox = document.getElementById('Other');
+    const diabetes = document.getElementById('Diabetes');
+    const form = document.getElementById('answerChoice');
+
+    if (otherCheckbox || diabetes) {
+        // This function will handle both adding and removing the additional input
+        const toggleOtherInput = () => {
+            const otherDiv = document.getElementById('otherdiv');
+            if (otherCheckbox.checked) {
+                if (!otherDiv) {  // Check if the div doesn't already exist
+                    
+                    const html = `
+                        <div id="otherdiv">
+                            <label for="otherValue">Other:</label>
+                            <input type="text" name="otherValue" id="otherValue">
+                        </div>`;
+                    form.insertAdjacentHTML('beforeend', html);
+                }
+            } else {
+                if (otherDiv) {  // Check if the div exists
+                    otherDiv.remove();
+                }
+            }
+        };
+
+        // Attach event listener to handle clicks
+        otherCheckbox.addEventListener('click', toggleOtherInput);
+
+        // Call the function to set the correct initial state based on the checkbox state when the page loads
+        toggleOtherInput();
+    }
 }
