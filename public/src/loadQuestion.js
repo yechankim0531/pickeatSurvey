@@ -12,7 +12,7 @@ function load5choice(questions, currentQuestion) {
 
         const radioInput = document.createElement('input');
         radioInput.type = 'radio'
-        radioInput.name = `q${currentQuestion+1}`
+        radioInput.name = currentQuestion+1
         radioInput.id = `choice${i}`
         radioInput.value=`${i}`
 
@@ -71,7 +71,7 @@ function loadMultiplechoice(questions, currentQuestion) {
         }    
         const option = document.createElement('input');
         option.type = 'checkbox'
-        option.name = `q${currentQuestion+1}`
+        option.name = currentQuestion+1
         option.id = choice[j]
         option.value= choice[j]
 
@@ -108,6 +108,10 @@ if (values) {
         answer.checked = "checked";
         })
 }
+
+
+
+
 
 }
 
@@ -153,7 +157,7 @@ function loadHabit(questions, currentQuestion){
         
         const option = document.createElement('input');
         option.type = 'radio'
-        option.name = `q${currentQuestion+1}`
+        option.name = currentQuestion+1
         option.id = choice[i]
         option.value= choice[i]
 
@@ -194,33 +198,91 @@ function loadExtra(){
     
     const otherCheckbox = document.getElementById('Other');
     const diabetes = document.getElementById('Diabetes');
+    const hypertension = document.getElementById('Hypertension');
     const form = document.getElementById('answerChoice');
 
-    if (otherCheckbox || diabetes) {
+   
+
         // This function will handle both adding and removing the additional input
-        const toggleOtherInput = () => {
-            const otherDiv = document.getElementById('otherdiv');
-            if (otherCheckbox.checked) {
-                if (!otherDiv) {  // Check if the div doesn't already exist
-                    
-                    const html = `
-                        <div id="otherdiv">
-                            <label for="otherValue">Other:</label>
-                            <input type="text" name="otherValue" id="otherValue">
-                        </div>`;
-                    form.insertAdjacentHTML('beforeend', html);
-                }
-            } else {
-                if (otherDiv) {  // Check if the div exists
-                    otherDiv.remove();
+        const toggleOtherInput = (input, div, html) => {
+            return function(){
+                const otherDiv = document.getElementById(div);
+                console.log(otherDiv)
+                if (input.checked) {
+                    if (!otherDiv) {  // Check if the div doesn't already exist
+                        form.insertAdjacentHTML('beforeend', html);
+                        const allElement = document.getElementById(div).querySelectorAll('input')
+                        
+                        allElement.forEach((element)=>{
+                            const cookieValue = getCookie(element.name);
+                            console.log(cookieValue)
+                            if(cookieValue){
+                            element.value = cookieValue
+                        }
+                        })
+                        
+                    }
+                } else {
+                    if (otherDiv) {  // Check if the div exists
+                        
+                        const allElement = otherDiv.querySelectorAll('input')
+                        
+                        allElement.forEach((element)=>{
+                            
+                            eraseCookie(element.name);
+                            cookiemap[element.name]=""
+                            // cookiemap.delete(element.name)
+                            
+                        })
+
+                        otherDiv.remove();
+                        
+                    }
                 }
             }
-        };
+        }
+            
+        
 
         // Attach event listener to handle clicks
-        otherCheckbox.addEventListener('click', toggleOtherInput);
+        const otherHTML = `
+                        <div id="otherdiv" class = "extra">
+                            <label for="otherValue" >Other: </label>
+                            <input type="text"  name="otherValue" id="otherValue">
+                        </div>`;
 
-        // Call the function to set the correct initial state based on the checkbox state when the page loads
+        const diabetesHTML = `
+                        <div id="diabetesdiv" class = "extra">
+                            <label for="diabetesValue" >Recent Fasting Blood Sugar </label>
+                            <input type="text" name="diabetesValue"  id="diabetesValue">
+                        </div>`;
+        const hypertensionHTML = `
+                        <div id="hypertensiondiv" >
+                         <div class = "extra">
+                            <label for="bloodPressure" >Recent systolic/diastolic blood pressure </label>
+                            <input type="text" name="bloodPressure" id="bloodPressure">
+                             </div>
+                             <div class = "extra">
+                            <label for="heartRate" >Recent Heart Rate</label>
+                            <input type="text" name="heartRate" id="heartRate">
+                        </div>`;
+        if(otherCheckbox){
+            otherCheckbox.addEventListener('click', toggleOtherInput(otherCheckbox,"otherdiv",otherHTML));
+
+            toggleOtherInput(otherCheckbox,"otherdiv",otherHTML)()
+        }
+        if(diabetes){
+            diabetes.addEventListener('click', toggleOtherInput(diabetes,"diabetesdiv",diabetesHTML));
+            toggleOtherInput(diabetes,"diabetesdiv",diabetesHTML)()
+        }
+        if(hypertension){
+            hypertension.addEventListener('click', toggleOtherInput(hypertension,"hypertensiondiv",hypertensionHTML));
+            toggleOtherInput(hypertension,"hypertensiondiv",hypertensionHTML)()
+        }
+        
+        
+
+
         toggleOtherInput();
     }
-}
+

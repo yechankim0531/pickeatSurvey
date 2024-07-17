@@ -90,3 +90,6 @@ function getCookie(name) {
     return cookiemap[name] || null;
 }
 
+function eraseCookie(name) {   
+    document.cookie = name+'=; Max-Age=-99999999;';  
+}

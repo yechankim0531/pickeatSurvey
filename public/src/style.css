@@ -264,6 +264,26 @@ input[type='checkbox']{
   background-color: #EA185E;
 }
 
+.extra{
+  padding-top: 0.5rem;
+  display: flex;
+}
+
+.extra input{
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-bottom: 0.15rem solid rgba(0, 0, 0, 0.12);
+  font-size: 0.8rem;
+}
+.extra label{
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+
+
 @media (max-width: 768px) {
   body {
     padding: 20px;
