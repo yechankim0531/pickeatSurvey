@@ -45,7 +45,7 @@ function load5choice(questions, currentQuestion) {
     document.getElementById("a5").innerText = choice[4]
 
     
-    const value = getCookie(`q${currentQuestion+1}`)
+    const value = getCookie(currentQuestion+1)
     if(value){
         const answer = document.getElementById(`choice${value}`) 
         answer.checked = "checked";
@@ -90,7 +90,7 @@ function loadMultiplechoice(questions, currentQuestion) {
 }
 document.getElementById("question").innerText = questions[currentQuestion].question;
 
-const values = getCookie(`q${currentQuestion+1}`)
+const values = getCookie(currentQuestion+1)
 
 //console.log(typeof values)
 //console.log(values)
@@ -173,9 +173,12 @@ function loadHabit(questions, currentQuestion){
     }
     form.append(container)
 
-    const value = getCookie(`q${currentQuestion+1}`)
-    const answer = document.getElementById(value) 
-    answer.checked = "checked";
+    const value = getCookie(currentQuestion+1)
+
+    if(value){
+        const answer = document.getElementById(`${value}`) 
+        answer.checked = "checked";
+    }
     
 }
 

@@ -65,6 +65,7 @@ function setTime(days) {
         let expires = "expires=" + date.toUTCString();
         document.cookie = "time" + "=" + value + ";" + expires + ";path=/";
         cookiemap["time"] = value
+        
     }
 
     if (!cookiemap["time"]) {

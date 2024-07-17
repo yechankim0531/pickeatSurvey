@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+app.use(express.json())
 const {fetchQuestions} = require("./DB.js")
 
 app.use(express.static(path.join(__dirname))); // Serve static files from the 'src' directory
@@ -35,9 +36,18 @@ app.get('/end', function(req, res){
     res.sendFile(path.join(__dirname,  'end.html')); // Serve user.html for the /user route
 });
 
+
+app.post('/api/form/sendData', function(req,res){
+    console.log("Requested");
+    //console.log(cleanData(req.body))
+
+    
+});
+
 app.listen(8080, () => {
     console.log('Server is listening on port 8080');
 });
+
 
 
 

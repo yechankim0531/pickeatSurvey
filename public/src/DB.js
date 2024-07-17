@@ -33,7 +33,7 @@ async function fetchQuestions(){
     }
 }
 
-async function writeAnswers(queryText, values){
+async function writeAnswers(data){
     //const queryText = "INSERT INTO survey_questions (question_id, question, choices, survey_id, type) VALUES ($1, $2, $3,$4, $5)";
     //const values = [1, 'How much do you like sweetness?', '[Prefer Less, Neutral, Slightly Like, Moderatly Like, Strongly Like]', 1, 'pref'];
     const client = await pool.connect();
@@ -49,11 +49,22 @@ async function writeAnswers(queryText, values){
     }
 }
 
+// function cleanData(data){
+//     let question=[]
+//     let answers=[]
+//     for(let i=0;i<48;i++ ){
+//         const number = i+1
+//         question[i] = number
+//         answers[i] = data[`${number}`]
+//     }
+//     return question, answers
+// }
+
 module.exports = {
     fetchQuestions,
-    writeAnswers
+    writeAnswers,
+    //cleanData
 };
 
 
 
-//fetchQuestions();

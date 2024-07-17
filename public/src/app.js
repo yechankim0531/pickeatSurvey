@@ -14,6 +14,7 @@ const nextBtn = document.getElementById('nextBtn');
 const prevBtn = document.getElementById('prevBtn');
 
 
+
 // const { performance } = require('perf_hooks');
 
 let currentQuestion = 0;
@@ -65,18 +66,32 @@ document.addEventListener('DOMContentLoaded', async function () {
             startTime=new Date();
         }
         nextBtn.addEventListener('click', function () {
-            endTime=new Date();
-            setTime(7)
-            setCookie(7)
-            currentQuestion++;
-            if (currentQuestion < questions.length) {
-                updateURL();
-                loadCurrentQuestion();
-              
-            } else {
-                window.location.href = 'end.html';
+            if(currentQuestion == questions.length-1){
+                sendData()
+                //window.location.href = 'end.html';
+
             }
-            startTime=new Date();
+            else{
+                endTime=new Date();
+                setTime(7)
+                setCookie(7)
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    updateURL();
+                    loadCurrentQuestion();
+                  
+                } 
+    
+                if(currentQuestion == questions.length-1){
+                    nextBtn.innerText = 'Submit'
+    
+                }
+                
+                
+             
+                startTime=new Date();
+            }
+           
             
         });
         
@@ -88,14 +103,22 @@ document.addEventListener('DOMContentLoaded', async function () {
             setCookie(7)
             if (currentQuestion === 0) {
                 window.location.href = 'user.html';
-            } else {
+            }
+            
+            else {
                 currentQuestion--;
                 updateURL();
                 loadCurrentQuestion();
+                nextBtn.innerText = 'Next';
                 
             }
         });
     }
+    
+    
+            
+        
+    
 
 
     
@@ -144,6 +167,17 @@ async function fetchQuestions() {
         console.log('Error Fetching Questions');
         console.log(err);
     }
+}
+
+function sendData(){
+     const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(cookiemap)
+     }
+    fetch('/api/form/sendData', options)
 }
 
 
