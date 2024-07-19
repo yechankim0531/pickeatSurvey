@@ -218,7 +218,7 @@ function loadExtra(){
                         
                         allElement.forEach((element)=>{
                             const cookieValue = getCookie(element.name);
-                            console.log(cookieValue)
+                            //console.log(cookieValue)
                             if(cookieValue){
                             element.value = cookieValue
                         }
@@ -248,11 +248,18 @@ function loadExtra(){
         
 
         // Attach event listener to handle clicks
-        const otherHTML = `
+        const otherAllergies = `
                         <div id="otherdiv" class = "extra">
-                            <label for="otherValue" >Other: </label>
-                            <input type="text"  name="otherValue" id="otherValue">
+                            <label for="otherAllergies" >Other: </label>
+                            <input type="text"  name="otherAllergies" id="otherAllergies">
                         </div>`;
+
+        const otherReligion = `
+                        <div id="otherdiv" class = "extra">
+                            <label for="otherReligion" >Other: </label>
+                            <input type="text"  name="otherReligion" id="otherReligion">
+                        </div>`;
+        
 
         const diabetesHTML = `
                         <div id="diabetesdiv" class = "extra">
@@ -270,9 +277,17 @@ function loadExtra(){
                             <input type="text" name="heartRate" id="heartRate">
                         </div>`;
         if(otherCheckbox){
-            otherCheckbox.addEventListener('click', toggleOtherInput(otherCheckbox,"otherdiv",otherHTML));
+            if(currentQuestion==37){
+                otherCheckbox.addEventListener('click', toggleOtherInput(otherCheckbox,"otherdiv",otherAllergies));
+                toggleOtherInput(otherCheckbox,"otherdiv",otherAllergies)()
+            }
+            if(currentQuestion==41){
+                otherCheckbox.addEventListener('click', toggleOtherInput(otherCheckbox,"otherdiv",otherReligion));
+                toggleOtherInput(otherCheckbox,"otherdiv",otherReligion)()
+            }
+            
 
-            toggleOtherInput(otherCheckbox,"otherdiv",otherHTML)()
+           
         }
         if(diabetes){
             diabetes.addEventListener('click', toggleOtherInput(diabetes,"diabetesdiv",diabetesHTML));

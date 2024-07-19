@@ -34,12 +34,31 @@ async function fetchQuestions(){
 }
 
 async function writeAnswers(data){
-    //const queryText = "INSERT INTO survey_questions (question_id, question, choices, survey_id, type) VALUES ($1, $2, $3,$4, $5)";
-    //const values = [1, 'How much do you like sweetness?', '[Prefer Less, Neutral, Slightly Like, Moderatly Like, Strongly Like]', 1, 'pref'];
     const client = await pool.connect();
+    const newData = cleanData(data)
+    
     try{
-        const res = await client.query(queryText,values)
-        console.log(res.rows)
+        
+        const date_submitted = new Date()
+        const phone = newData.phone
+        console.log(typeof phone)
+        
+        let queryText = "INSERT INTO users (phone, name, country_code, sex, dob,race) VALUES ($1, $2, $3, $4, $5, $6)";
+        let values= [data['number'], data['name'], 1 ,data['sex'], data['DoB'],data['race'], ]
+        await client.query(queryText, values);
+        
+        for(let i=0; i<newData.question.length; i++){
+            queryText = "INSERT INTO survey_answers (question_id, phone, answer, date_submitted, time) VALUES ($1, $2, $3, $4, $5)";
+            const question_id = newData.question[i];
+            const answer = newData.answers[i]
+            const time = newData.time[i]
+            
+            values = [question_id, phone, answer, date_submitted, time];
+            
+            await client.query(queryText, values);
+        }
+        console.log("All data uploaded successfully.");
+        
     }
     catch(err){
         console.log(err);
@@ -49,21 +68,40 @@ async function writeAnswers(data){
     }
 }
 
-// function cleanData(data){
-//     let question=[]
-//     let answers=[]
-//     for(let i=0;i<48;i++ ){
-//         const number = i+1
-//         question[i] = number
-//         answers[i] = data[`${number}`]
-//     }
-//     return question, answers
-// }
+function cleanData(data){
+    let question= []
+    
+
+    let answers=[]
+    for(let i=0;i<48;i++ ){
+        
+        const number = i+1
+        question[number]=number
+        if(i===40){
+            answers[i] = `${data['height']}CM,${data['weight']}KG `
+        }
+        else{
+            
+            answers[i] = data[`${number}`]
+        }
+        question[i] = number
+        
+    }
+    
+    if(data['diabetesValue'])answers[38]=answers[38]+", Blood Sugar: "+data['diabetesValue']
+    if(data['bloodPressure'])answers[38]= answers[38]+", Blood Pressure: "+data['bloodPressure']+ ", Heart Rate: "+ data['heartrate']
+    if(data['otherAllergies'])answers[37]= answers[37]+": "+data['otherAllergies']
+    if(data['otherReligion'])answers[41]= answers[41]+": "+data['otherReligion']
+
+    const time= data['time'].split(",")
+    
+    return { question, answers, phone: data['number'], time }
+}
 
 module.exports = {
     fetchQuestions,
     writeAnswers,
-    //cleanData
+    cleanData
 };
 
 

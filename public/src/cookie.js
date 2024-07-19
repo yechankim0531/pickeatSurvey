@@ -76,6 +76,7 @@ function setTime(days) {
     else {
         if(!cookiemap["time"][currentQuestion]){
             cookiemap["time"][currentQuestion]=time
+            console.log(time)
         }
        
     }

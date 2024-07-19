@@ -67,8 +67,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
         nextBtn.addEventListener('click', function () {
             if(currentQuestion == questions.length-1){
+                endTime=new Date();
+                setTime(7)
                 sendData()
-                //window.location.href = 'end.html';
+                window.location.href = 'end.html';
 
             }
             else{

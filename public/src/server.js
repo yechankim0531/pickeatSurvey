@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 app.use(express.json())
-const {fetchQuestions} = require("./DB.js")
+const {fetchQuestions,  writeAnswers} = require("./DB.js")
 
 app.use(express.static(path.join(__dirname))); // Serve static files from the 'src' directory
 
@@ -39,6 +39,10 @@ app.get('/end', function(req, res){
 
 app.post('/api/form/sendData', function(req,res){
     console.log("Requested");
+ 
+    writeAnswers(req.body)
+    //console.log(result.answers)
+
     //console.log(cleanData(req.body))
 
     
