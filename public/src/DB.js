@@ -41,11 +41,12 @@ async function writeAnswers(data){
         
         const date_submitted = new Date()
         const phone = newData.phone
-        console.log(typeof phone)
+        
         
         let queryText = "INSERT INTO users (phone, name, country_code, sex, dob,race) VALUES ($1, $2, $3, $4, $5, $6)";
         let values= [data['number'], data['name'], 1 ,data['sex'], data['DoB'],data['race'], ]
-        await client.query(queryText, values);
+        //Uncomment to send Data to DB
+        //await client.query(queryText, values);
         
         for(let i=0; i<newData.question.length; i++){
             queryText = "INSERT INTO survey_answers (question_id, phone, answer, date_submitted, time) VALUES ($1, $2, $3, $4, $5)";
@@ -54,8 +55,10 @@ async function writeAnswers(data){
             const time = newData.time[i]
             
             values = [question_id, phone, answer, date_submitted, time];
-            
-            await client.query(queryText, values);
+            console.log("Executing query:", queryText);
+            console.log("With values:", values);
+            //Uncomment to send Data to DB
+            //await client.query(queryText, values);
         }
         console.log("All data uploaded successfully.");
         

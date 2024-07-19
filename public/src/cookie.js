@@ -50,6 +50,7 @@ function setCookie(days) {
             document.cookie = input+ "=" + value + ";" + expires + ";path=/";
             cookiemap[input] = value
         }
+        
       
         
     }

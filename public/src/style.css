@@ -82,12 +82,12 @@ body {
 }
 
 .button {
-  background-color: #EA185E;
+  background-color: #EDEFF2;
   border: none;
   margin: 1.25rem 0;
   width: 48%;
   border-radius: 0.7rem;
-  color: #fff;
+  color: #AEB4BA;
   padding: 0.875rem 1.875rem;
   transition: background-color 0.5s;
 }
@@ -115,6 +115,11 @@ body {
   color: #fff;
 }
 
+
+#startSurvey{
+  background-color: #EA185E;
+  color: #fff;
+}
 .box {
   margin: 1.25rem 0;
 }

@@ -15,6 +15,7 @@ const prevBtn = document.getElementById('prevBtn');
 
 
 
+
 // const { performance } = require('perf_hooks');
 
 let currentQuestion = 0;
@@ -52,48 +53,98 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (next) {
         loadUser();
+        const answerChoices = document.querySelector('form');
+        if(cookiemap['name']){
+            next.style.backgroundColor = '#EA185E';
+            next.style.color = '#fff';
+        }
+        answerChoices.addEventListener('change', function() {
+            console.log('changed')
+            if(isAnswered()){
+                next.style.backgroundColor = '#EA185E';
+                next.style.color = '#fff';
+            }
+            else{
+                next.style.backgroundColor = '#EDEFF2';
+                next.style.color = '#AEB4BA';
+            }
+            
+        });
         next.addEventListener('click', function () {
-          
+            if (isAnswered()){
             setCookie(7)
             
             window.location.href = 'question.html';
+            }
             
         });
     }
 
+    
+    
+   
+    
     if (nextBtn) {
         if (currentQuestion===0){
             startTime=new Date();
         }
-        nextBtn.addEventListener('click', function () {
-            if(currentQuestion == questions.length-1){
-                endTime=new Date();
-                setTime(7)
-                sendData()
-                window.location.href = 'end.html';
 
-            }
-            else{
-                endTime=new Date();
-                setTime(7)
-                setCookie(7)
-                currentQuestion++;
-                if (currentQuestion < questions.length) {
-                    updateURL();
-                    loadCurrentQuestion();
-                  
-                } 
+        const answerChoices = document.querySelector('form');
+        
     
-                if(currentQuestion == questions.length-1){
-                    nextBtn.innerText = 'Submit'
-    
+            answerChoices.addEventListener('change', function() {
+                if(isAnswered()){
+                    
+                    nextBtn.style.backgroundColor = '#EA185E';
+                    nextBtn.style.color = '#fff';
+                }
+                else{
+                    nextBtn.style.backgroundColor = '#EDEFF2';
+                    nextBtn.style.color = '#AEB4BA';
                 }
                 
+            });
+        
+        
+        
+        
+        nextBtn.addEventListener('click', function () {
+            
+         
+            if (isAnswered()){
                 
-             
-                startTime=new Date();
+                if(currentQuestion == questions.length-1){
+                    endTime=new Date();
+                    setTime(7)
+                    sendData()
+                    window.location.href = 'end.html';
+    
+                }
+                else{
+                    endTime=new Date();
+                    setTime(7)
+                    setCookie(7)
+                    currentQuestion++;
+                    if (currentQuestion < questions.length) {
+                        updateURL();
+                        loadCurrentQuestion();
+                      
+                    } 
+        
+                    if(currentQuestion == questions.length-1){
+                        nextBtn.innerText = 'Submit'
+        
+                    }
+                    
+                    
+                 
+                    startTime=new Date();
+                }
+               
             }
+
            
+            
             
         });
         
@@ -116,6 +167,35 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
         });
     }
+
+    const none = document.getElementById('None')
+    const checkboxes = document.querySelectorAll('#checkboxForm input[type="checkbox"]');
+    if(none){
+        console.log('None')
+        none.addEventListener('click', function(){
+            if(this.checked){
+                console.log('noneclicked')
+                // checkboxes.forEach(check=>{
+                //     if(check.id!=='None'){
+                //         check.checked = false;
+                //     }
+                    
+                // })
+            }
+
+        })
+        checkboxes.forEach(check=>{
+            if(check.id!=='None'){
+                checkboxes.addEventListener('click', function(){
+                    none.checked=false
+                })
+            }
+        })
+
+        
+    }
+
+    
     
     
             
@@ -128,7 +208,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 function loadCurrentQuestion() {
-
+    
     if (!questions[currentQuestion]) {
         return;
     }
@@ -145,6 +225,15 @@ function loadCurrentQuestion() {
     loadExtra();
     
     updateProgress()
+    if(cookiemap[currentQuestion+1]){
+        nextBtn.style.backgroundColor = '#EA185E';
+        nextBtn.style.color = '#fff';
+    }
+    else{
+        nextBtn.style.backgroundColor = '#EDEFF2';
+        nextBtn.style.color = '#AEB4BA';
+    }
+    
 }
 
 function updateURL() {
@@ -183,4 +272,18 @@ function sendData(){
 }
 
 
-
+function isAnswered(){
+    const form = document.querySelector('form')
+    const fd = new FormData(form)
+    let answered = false;
+    fd.forEach((value, key) => {
+        if(value===''){
+            answered=false
+        }
+        else{
+            answered = true
+        }
+    
+    })
+    return answered
+}
