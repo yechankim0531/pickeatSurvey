@@ -199,7 +199,7 @@ function loadCurrentQuestion() {
     loadExtra();
     
     updateProgress()
-    if(cookiemap[currentQuestion+1]){
+    if(cookiemap[currentQuestion+1]||cookiemap['height']){
         nextBtn.style.backgroundColor = '#EA185E';
         nextBtn.style.color = '#fff';
     }
@@ -277,6 +277,8 @@ function handleNone(){
             if (this.checked) {
                 if(otherDiv){
                     otherDiv.remove();
+                    eraseCookie('otherAllergies');
+                    cookiemap['otherAllergies']=""
                 }
                 
                 checkboxes.forEach(checkbox => {

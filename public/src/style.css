@@ -75,8 +75,9 @@ body {
   background: #fff;
   align-items: center;
   border-radius: 2.5rem;
-  width: 90%;
-  padding: 1rem 2rem;
+  width: 100%;
+  margin: auto;
+  padding: 1rem;
   max-width: 50rem;
   text-align: center;
 }
@@ -214,6 +215,8 @@ img{
   justify-content: space-evenly;
   flex-wrap: wrap;
   width: 100%; 
+  margin: 0; 
+  padding: 0;
 }
 
 input[type='checkbox']{
@@ -229,13 +232,19 @@ input[type='checkbox']{
 }
 .mChoice label {
   display: flex;
-  padding: 0.7rem 1.5rem;
-  justify-content: space-evenly;
-  margin-right: 20px;
+  justify-content: space-evenly; /* Center the text and content within the label */
+  align-items: center; /* Aligns items vertically in the center */
+  width: 48%; /* Slightly less than half to account for gap/padding */
+  padding: 0.7rem 1.5rem; /* Padding for spacing inside the label */
+  margin: 0.5rem 1%; /* Small margin to ensure separation between rows and slight space on sides */
   border: 2px solid #DBDFE2; 
   border-radius: 0.5rem;
   cursor: pointer;
   color: #78828C;
+  box-sizing: border-box; /* Ensures padding and border are included in the width */
+  text-align: center; /* Ensures text is centered */
+  white-space: nowrap; /* Prevents text wrapping */
+  
   
 }
 
@@ -296,7 +305,10 @@ input[type='checkbox']{
   }
   .container {
     height: auto;
-    padding: 1.25rem;
+    padding: 0rem;
+    
+    position: relative; /* Parent needs to be positioned */
+    padding-bottom: 3rem;
   }
   .container form .form-row, mChoice {
     flex-direction: column;
