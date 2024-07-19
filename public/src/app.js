@@ -168,32 +168,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 
-    const none = document.getElementById('None')
-    const checkboxes = document.querySelectorAll('#checkboxForm input[type="checkbox"]');
-    if(none){
-        console.log('None')
-        none.addEventListener('click', function(){
-            if(this.checked){
-                console.log('noneclicked')
-                // checkboxes.forEach(check=>{
-                //     if(check.id!=='None'){
-                //         check.checked = false;
-                //     }
-                    
-                // })
-            }
-
-        })
-        checkboxes.forEach(check=>{
-            if(check.id!=='None'){
-                checkboxes.addEventListener('click', function(){
-                    none.checked=false
-                })
-            }
-        })
-
-        
-    }
 
     
     
@@ -232,6 +206,33 @@ function loadCurrentQuestion() {
     else{
         nextBtn.style.backgroundColor = '#EDEFF2';
         nextBtn.style.color = '#AEB4BA';
+    }
+    
+    const none = document.getElementById('None')
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    if (none) {
+        none.addEventListener('change', function() {
+            
+            if (this.checked) {
+                console.log('clicked')
+                checkboxes.forEach(checkbox => {
+                    console.log(checkbox.value)
+                    if (checkbox.id !== 'None') {
+                        checkbox.checked = false;
+                    }
+                });
+            }
+        });
+
+        checkboxes.forEach(checkbox => {
+            if (checkbox.id !== 'None') {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        none.checked = false;
+                    }
+                });
+            }
+        });
     }
     
 }
