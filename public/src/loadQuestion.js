@@ -210,7 +210,6 @@ function loadExtra(){
         const toggleOtherInput = (input, div, html) => {
             return function(){
                 const otherDiv = document.getElementById(div);
-                console.log(otherDiv)
                 if (input.checked) {
                     if (!otherDiv) {  // Check if the div doesn't already exist
                         form.insertAdjacentHTML('beforeend', html);

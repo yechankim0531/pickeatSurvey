@@ -207,33 +207,9 @@ function loadCurrentQuestion() {
         nextBtn.style.backgroundColor = '#EDEFF2';
         nextBtn.style.color = '#AEB4BA';
     }
-    
-    const none = document.getElementById('None')
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    if (none) {
-        none.addEventListener('change', function() {
-            
-            if (this.checked) {
-                console.log('clicked')
-                checkboxes.forEach(checkbox => {
-                    console.log(checkbox.value)
-                    if (checkbox.id !== 'None') {
-                        checkbox.checked = false;
-                    }
-                });
-            }
-        });
 
-        checkboxes.forEach(checkbox => {
-            if (checkbox.id !== 'None') {
-                checkbox.addEventListener('change', function() {
-                    if (this.checked) {
-                        none.checked = false;
-                    }
-                });
-            }
-        });
-    }
+    handleNone()
+    
     
 }
 
@@ -287,4 +263,39 @@ function isAnswered(){
     
     })
     return answered
+}
+
+function handleNone(){
+    
+    const none = document.getElementById('None')
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    if (none) {
+        
+        none.addEventListener('change', function() {
+            const otherDiv =  document.getElementById('otherdiv');
+            
+            if (this.checked) {
+                if(otherDiv){
+                    otherDiv.remove();
+                }
+                
+                checkboxes.forEach(checkbox => {
+                    
+                    if (checkbox.id !== 'None') {
+                        checkbox.checked = false;
+                    }
+                });
+            }
+        });
+
+        checkboxes.forEach(checkbox => {
+            if (checkbox.id !== 'None') {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        none.checked = false;
+                    }
+                });
+            }
+        });
+    }
 }
