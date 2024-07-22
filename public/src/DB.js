@@ -9,7 +9,7 @@ const pool = new Pool({
 });
 
 
-
+let length = 0;
 async function fetchQuestions(){
     const queryText = "SELECT * FROM survey_questions ORDER BY question_id";
     const client = await pool.connect();
@@ -20,9 +20,10 @@ async function fetchQuestions(){
             const answers = surveyQuestions[i].choices
             const list = answers.replace(/[\[\]]/g, '').split(", ")
             surveyQuestions[i].choices = list
+            
 
         }
-        //console.log(surveyQuestions)
+        length = surveyQuestions.length
         return surveyQuestions;
         
     } catch (err) {
@@ -76,7 +77,7 @@ function cleanData(data){
     
 
     let answers=[]
-    for(let i=0;i<48;i++ ){
+    for(let i=0;i<length;i++ ){
         
         const number = i+1
         question[number]=number
