@@ -54,8 +54,7 @@ http://publishing.kr/vw/
 */
 
 * {
-  margin: 0;
-  padding: 0;
+ 
   outline: none;
   box-sizing: border-box;
   font-family: 'Spoqa Han Sans Neo', 'sans-serif';
@@ -63,34 +62,55 @@ http://publishing.kr/vw/
 
 body {
   display: flex;
+  padding: 0;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   min-height: 100vh;
-  background-color: rgb(234, 24, 94, 0.75);
+  max-width: 100vw;
+  
 }
 
 .container {
- 
+  
+  
+  overflow-y: auto;
   align-items: center;
   background: #fff;
   align-items: center;
   border-radius: 2.5rem;
-  width: 100%;
-  margin: auto;
+  height: 85vh;
+  width: 90vw;
+
   padding: 1rem;
   max-width: 50rem;
   text-align: center;
+  position: relative;
 }
+
+
+
 
 .button {
   background-color: #EDEFF2;
   border: none;
-  margin: 1.25rem 0;
+  margin: 0;
   width: 48%;
   border-radius: 0.7rem;
   color: #AEB4BA;
   padding: 0.875rem 1.875rem;
   transition: background-color 0.5s;
+}
+.buttons{
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin: 0.2rem;
+  position: fixed;
+  padding: 0.5rem;
+  bottom: 0;
+  background: #fff;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
 }
 
 .button:hover {
@@ -101,10 +121,11 @@ body {
 
 .prevBtn {
   background-color: #FBFBFB;
-  margin: 1.25rem 0;
+  margin:  0;
   width: 48%;
   border-radius: 0.7rem;
-  border-color: #DBDFE2;
+  
+  border:1.7px solid #DBDFE2; ;
   color: #78828C;
   padding: 0.875rem 1.875rem;
   transition: background-color 0.5s;
@@ -127,6 +148,10 @@ body {
 
 .text {
   padding: 2rem;
+}
+
+form{
+  width: 100vw;
 }
 
 form .form-row {
@@ -186,10 +211,13 @@ select {
 .radio-container input[type="radio"] {
   margin-right: 0.5rem; /* Space between radio button and label */
   cursor: pointer;
+  
 }
 
 .radio-container label{
-  flex-wrap: nowrap
+  flex-wrap: nowrap;
+  width: 20vh;
+  text-align: left;
 }
 
 input[type='radio'] {
@@ -212,7 +240,7 @@ img{
 
 .mChoice{
   display: flex;
-  justify-content: space-evenly;
+  justify-content: left;
   flex-wrap: wrap;
   width: 100%; 
   margin: 0; 
@@ -235,12 +263,13 @@ input[type='checkbox']{
   justify-content: space-evenly; /* Center the text and content within the label */
   align-items: center; /* Aligns items vertically in the center */
   width: 48%; /* Slightly less than half to account for gap/padding */
-  padding: 0.7rem 1.5rem; /* Padding for spacing inside the label */
+  padding: 0.7rem 0; /* Padding for spacing inside the label */
   margin: 0.5rem 1%; /* Small margin to ensure separation between rows and slight space on sides */
-  border: 2px solid #DBDFE2; 
+  border: 1.7px solid #DBDFE2; 
   border-radius: 0.5rem;
   cursor: pointer;
   color: #78828C;
+  
   box-sizing: border-box; /* Ensures padding and border are included in the width */
   text-align: center; /* Ensures text is centered */
   white-space: nowrap; /* Prevents text wrapping */
@@ -258,6 +287,11 @@ input[type='checkbox']{
   color: #EA185E;
   
 }
+input[type="radio"]:checked + label {
+
+  color: #EA185E;
+  
+}
 
 #question{
   padding: 1rem;
@@ -266,7 +300,6 @@ input[type='checkbox']{
 #progress-container {
   width: 100%;
   height: 0.8rem;
- 
   border-radius: 1.2rem;
   background-color: #EDEFF2; 
   overflow: hidden;
@@ -285,16 +318,52 @@ input[type='checkbox']{
 
 .extra input{
   display: block;
-  width: 100%;
+  width: 50%;
   height: 100%;
   border: none;
   border-bottom: 0.15rem solid rgba(0, 0, 0, 0.12);
   font-size: 0.8rem;
 }
 .extra label{
-  width: 100%;
+  width: 40%;
   font-size: 0.8rem;
+  color: #606870;
 }
+
+.unit{
+  color: #939BA3;
+  padding-left: 1rem;
+}
+
+.BMI{
+  display: flex;
+  justify-content: center;
+  gap: 0rem;
+  border: 1.7px solid #DBDFE2; 
+  margin: 1rem;
+  border-radius: 0.7rem;
+  
+}
+
+.BMI input{
+  text-align: right;
+  padding: 0.8rem 0rem;
+  font-size: 1.2rem;
+  border: none;
+  width: 10vh;
+  color: #939BA3;
+  
+}
+
+.BMI label{
+  padding: 1.2rem 0.3rem 0.3rem ;
+  font-size: 0.8rem;
+  width: 10vh;
+  text-align: left;
+  
+}
+
+
 
 
 
@@ -303,13 +372,7 @@ input[type='checkbox']{
     padding: 20px;
     background-color: #fff;
   }
-  .container {
-    height: auto;
-    padding: 0rem;
-    
-    position: relative; /* Parent needs to be positioned */
-    padding-bottom: 3rem;
-  }
+  
   .container form .form-row, mChoice {
     flex-direction: column;
     margin: 1rem 0;
@@ -318,9 +381,12 @@ input[type='checkbox']{
     bottom: 2rem;
   }
   .buttons{
-    
-    transform: translatey(4rem);
-   
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.5rem;
+    position: fixed;
+    bottom: 0;
+    background: #fff;
   }
-  
 }

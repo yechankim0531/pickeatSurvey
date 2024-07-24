@@ -25,6 +25,8 @@ let questions = [];
 
 document.addEventListener('DOMContentLoaded', async function () {
     
+    
+    
     // Only fetch questions and load the current question if relevant elements are present
     if (document.getElementById('answerChoice')) {
         await fetchQuestions();
@@ -197,7 +199,7 @@ function loadCurrentQuestion() {
         load5choice(questions, currentQuestion);
     }
     loadExtra();
-    
+    adjustLabelFontSize();
     updateProgress()
     if(cookiemap[currentQuestion+1]||cookiemap['height']){
         nextBtn.style.backgroundColor = '#EA185E';
@@ -273,6 +275,9 @@ function handleNone(){
         
         none.addEventListener('change', function() {
             const otherDiv =  document.getElementById('otherdiv');
+            const hDiv =  document.getElementById('hypertensiondiv');
+            const dDiv =  document.getElementById('diabetesdiv');
+
             
             if (this.checked) {
                 if(otherDiv){
@@ -280,6 +285,23 @@ function handleNone(){
                     eraseCookie('otherAllergies');
                     cookiemap['otherAllergies']=""
                 }
+
+                if(hDiv){
+                    hDiv.remove();
+                    eraseCookie('bloodPressure');
+                    cookiemap['bloodPressure']=""
+                    eraseCookie('heartRate');
+                    cookiemap['heartRate']=""
+                }
+
+                if(dDiv){
+                    dDiv.remove();
+                    eraseCookie('diabetesValue');
+                    cookiemap['bloodPressure']=""
+                    
+                }
+            
+            
                 
                 checkboxes.forEach(checkbox => {
                     
@@ -301,3 +323,24 @@ function handleNone(){
         });
     }
 }
+
+function adjustLabelFontSize() {
+    const labels = document.querySelectorAll('.mChoice label');
+    labels.forEach(label => {
+        let fontSize = parseInt(window.getComputedStyle(label).fontSize);
+        
+        while (label.scrollWidth > label.offsetWidth && fontSize > 10) { // 10px is the minimum font size you allow
+            console.log("Scroll Width: "+label.scrollWidth)
+            console.log("Offset Width: "+label.offsetWidth)
+            fontSize-=1.5;
+            
+            label.style.fontSize = `${fontSize}px`;
+            
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    adjustLabelFontSize(); // Adjust on initial load
+    window.addEventListener('resize', adjustLabelFontSize); // Adjust on window resize
+});

@@ -58,27 +58,25 @@ function load5choice(questions, currentQuestion) {
 function loadMultiplechoice(questions, currentQuestion) {
     const choice = questions[currentQuestion].choices
     const form = document.getElementById('answerChoice')
-    form.innerHTML = ' ';
+    document.getElementById("question").innerText = questions[currentQuestion].question;
+    form.innerHTML = '';
     
-
-    for(let i=0; i<choice.length; i+=2){
+    const container = document.createElement('div')
+    container.className = "mChoice"
+    for(let i=0; i<choice.length; i+=1){
         
-        const container = document.createElement('div')
-        container.className = "mChoice"
-        for(let j=i; j<i+2; j++){
-        if (j >= choice.length) {
-            break;
-        }    
+     
+        
         const option = document.createElement('input');
         option.type = 'checkbox'
         option.name = currentQuestion+1
-        option.id = choice[j]
-        option.value= choice[j]
+        option.id = choice[i]
+        option.value= choice[i]
 
         const label = document.createElement('label')
-        label.setAttribute('for', choice[j])
-        label.id = `O${j}`
-        label.innerText = choice[j]
+        label.setAttribute('for', choice[i])
+        label.id = `Choice${i}`
+        label.innerText = choice[i]
         
 
         container.append(option, label)
@@ -86,8 +84,6 @@ function loadMultiplechoice(questions, currentQuestion) {
         
     }
     form.append(container)
-    
-}
 document.getElementById("question").innerText = questions[currentQuestion].question;
 
 const values = getCookie(currentQuestion+1)
@@ -122,20 +118,26 @@ function loadBMI(questions, currentQuestion) {
     document.getElementById("question").innerText = questions[currentQuestion].question;
     
     form.innerHTML = `
-        <div class="input-data">
-            <input type="text" placeholder="Height"required id="height" name= "height">
-            <div class="underline"></div>
-        </div>
-        <label for="height">CM</label>
-        <div class="input-data">
-            <input type="text" placeholder="Weight" required id="weight" name= "weight">
-            <div class="underline"></div>
+
+        <div class="BMI">
+            <input type="text" placeholder="000"required id="height" name= "height">
+
             
-        </div>
         
-        <label for="weight">KG</label>
+        <label for="height">cm</label>
+
+        </div>
+
+        <div class="BMI">
+            <input type="text" placeholder="000" required id="weight" name= "weight">
+
+             <label for="weight">kg</label>
+           </div>
+        
+       
+
         `;
-    
+
     loadUser();
     
 
@@ -262,18 +264,21 @@ function loadExtra(){
 
         const diabetesHTML = `
                         <div id="diabetesdiv" class = "extra">
-                            <label for="diabetesValue" >Recent Fasting Blood Sugar </label>
+                            <label for="diabetesValue" >Recent Fasting Blood Sugar: </label>
                             <input type="text" name="diabetesValue"  id="diabetesValue">
+                            <div class='unit'> mg/dL </div>
                         </div>`;
         const hypertensionHTML = `
                         <div id="hypertensiondiv" >
                          <div class = "extra">
-                            <label for="bloodPressure" >Recent systolic/diastolic blood pressure </label>
+                            <label for="bloodPressure" >Recent Systolic/Diastolic Blood Pressure: </label>
                             <input type="text" name="bloodPressure" id="bloodPressure">
+                            <div class='unit'> mgHg </div>
                              </div>
                              <div class = "extra">
-                            <label for="heartRate" >Recent Heart Rate</label>
+                            <label for="heartRate" >Recent Heart Rate:</label>
                             <input type="text" name="heartRate" id="heartRate">
+                            <div class='unit'> bpm </div>
                         </div>`;
         if(otherCheckbox){
             if(currentQuestion==37){
