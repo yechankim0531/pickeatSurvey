@@ -19,6 +19,7 @@ const prevBtn = document.getElementById('prevBtn');
 // const { performance } = require('perf_hooks');
 
 let currentQuestion = 0;
+let paginationIndex = -1;
 let startTime;
 let endTime;
 let questions = [];
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             // Parse URL to get initial question index
             const urlParams = new URLSearchParams(window.location.search);
             currentQuestion = parseInt(urlParams.get('p')) - 1 || 0;
+            console.log
             loadCurrentQuestion();
         });
 
@@ -91,6 +93,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             startTime=new Date();
         }
 
+
+
+
         const answerChoices = document.querySelector('form');
         
     
@@ -127,10 +132,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                     setTime(7)
                     setCookie(7)
                     currentQuestion++;
+                   
+                      
                     if (currentQuestion < questions.length) {
                         updateURL();
                         loadCurrentQuestion();
-                      
+                        
                     } 
         
                     if(currentQuestion == questions.length-1){
@@ -161,6 +168,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
             
             else {
+               
                 currentQuestion--;
                 updateURL();
                 loadCurrentQuestion();
@@ -330,8 +338,7 @@ function adjustLabelFontSize() {
         let fontSize = parseInt(window.getComputedStyle(label).fontSize);
         
         while (label.scrollWidth > label.offsetWidth && fontSize > 10) { // 10px is the minimum font size you allow
-            console.log("Scroll Width: "+label.scrollWidth)
-            console.log("Offset Width: "+label.offsetWidth)
+            
             fontSize-=1.5;
             
             label.style.fontSize = `${fontSize}px`;

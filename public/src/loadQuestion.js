@@ -24,11 +24,38 @@ function load5choice(questions, currentQuestion) {
         container.append(radioInput, label)
         form.append(container)
     }
-    if(questions[currentQuestion].type==="taste"){
+    let array = questions[currentQuestion].type.replace(/[\[\]]/g, '')
+    array= array.split(',')
+    if(array[0]==="taste"){
+        
+       
+        
         const image = document.createElement('img');
         image.id="foodimg"
         image.src = "https://target.scene7.com/is/image/Target/GUEST_1c812756-196e-4286-bce3-5f6f2a9a4067?wid=488&hei=488&fmt=pjpeg"
         foodPic.append(image)
+
+
+  
+        const pagination = document.getElementById('pagination')
+        pagination.innerHTML = `<span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>`
+
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach(dot => dot.classList.remove('active'));
+       
+        dots[array[1]].classList.add('active');
+       
+        
+    }
+    else{
+        const pagination = document.getElementById('pagination')
+        pagination.innerHTML = ``
         
     }
 

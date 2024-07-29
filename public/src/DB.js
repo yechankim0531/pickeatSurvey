@@ -37,6 +37,7 @@ async function fetchQuestions(){
 async function writeAnswers(data){
     const client = await pool.connect();
     const newData = cleanData(data)
+
     
     try{
         
@@ -45,21 +46,22 @@ async function writeAnswers(data){
         
         
         let queryText = "INSERT INTO users (phone, name, country_code, sex, dob,race) VALUES ($1, $2, $3, $4, $5, $6)";
-        let values= [data['number'], data['name'], 1 ,data['sex'], data['DoB'],data['race'], ]
-        //Uncomment to send Data to DB
-        //await client.query(queryText, values);
+        let values= [data['number'], data['name'],data['country'] ,data['sex'], data['DoB'],data['race'], ]
         
-        for(let i=0; i<newData.question.length; i++){
+        //Uncomment to send Data to DB
+        await client.query(queryText, values);
+        
+        for(let i=0; i<newData.question.length-1; i++){
+            
             queryText = "INSERT INTO survey_answers (question_id, phone, answer, date_submitted, time) VALUES ($1, $2, $3, $4, $5)";
             const question_id = newData.question[i];
             const answer = newData.answers[i]
             const time = newData.time[i]
             
             values = [question_id, phone, answer, date_submitted, time];
-            console.log("Executing query:", queryText);
-            console.log("With values:", values);
+            //console.log("With values:", values);
             //Uncomment to send Data to DB
-            //await client.query(queryText, values);
+            await client.query(queryText, values);
         }
         console.log("All data uploaded successfully.");
         
@@ -97,8 +99,8 @@ function cleanData(data){
     if(data['otherAllergies'])answers[37]= answers[37]+": "+data['otherAllergies']
     if(data['otherReligion'])answers[41]= answers[41]+": "+data['otherReligion']
 
-    const time= data['time'].split(",")
-    
+    const time= JSON.stringify(data['time']).replace(/["']/g,"").split(',')
+    console.log(time)
     return { question, answers, phone: data['number'], time }
 }
 

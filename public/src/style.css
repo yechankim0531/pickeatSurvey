@@ -65,7 +65,7 @@ body {
   padding: 0;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   min-height: 100vh;
   max-width: 100vw;
   
@@ -74,12 +74,11 @@ body {
 .container {
   
   
-  overflow-y: auto;
   align-items: center;
   background: #fff;
   align-items: center;
   border-radius: 2.5rem;
-  height: 85vh;
+  height: 90vh;
   width: 90vw;
 
   padding: 1rem;
@@ -150,7 +149,7 @@ body {
   padding: 2rem;
 }
 
-form{
+#answerChoice{
   width: 100vw;
 }
 
@@ -351,7 +350,7 @@ input[type="radio"]:checked + label {
   font-size: 1.2rem;
   border: none;
   width: 10vh;
-  color: #939BA3;
+  color: #30383F;
   
 }
 
@@ -365,17 +364,49 @@ input[type="radio"]:checked + label {
 
 
 
+#pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0rem 0rem;
+
+ 
+}
+
+.dot {
+  
+  height: 0.5rem;
+  width: 0.5rem;
+  background-color: #DBDFE2 ;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 2px;
+
+}
+
+.dot.active {
+  background-color: #EA185E;
+}
+
+
+
+
 
 
 @media (max-width: 768px) {
   body {
     padding: 20px;
     background-color: #fff;
+    
+  }
+  .container{
+    overflow-y: auto;
   }
   
   .container form .form-row, mChoice {
     flex-direction: column;
     margin: 1rem 0;
+    
   }
   .input-data label {
     bottom: 2rem;

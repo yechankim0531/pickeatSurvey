@@ -59,6 +59,7 @@ function setCookie(days) {
   }
 function setTime(days) {
     const time = endTime - startTime
+    console.log(time)
     
     const set = (value) => {
         const date = new Date();
@@ -77,7 +78,7 @@ function setTime(days) {
     else {
         if(!cookiemap["time"][currentQuestion]){
             cookiemap["time"][currentQuestion]=time
-            console.log(time)
+            
         }
        
     }
