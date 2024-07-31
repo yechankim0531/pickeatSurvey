@@ -34,7 +34,7 @@ Make sure you have Node.js installed on your system. You can download it from [N
 To start the server, run:
 ```sh
 npm start
-
+```
 ##Pictures of Website
 ###Start Page of Survey
 ![Start](https://github.com/user-attachments/assets/1a69b99d-e8e9-463e-889d-43e7feb40b90)
@@ -59,3 +59,4 @@ npm start
 ##Simplified Video Showing Website
 
 https://github.com/user-attachments/assets/1ad17d0f-c367-41bb-9c3d-e7145882946e
+
