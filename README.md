@@ -58,5 +58,7 @@ npm start
 
 ## Simplified Video Showing Website
 
+The video below shows a shortened version of a user taking a survey, only showing unique pages
+
 https://github.com/user-attachments/assets/1ad17d0f-c367-41bb-9c3d-e7145882946e
 
