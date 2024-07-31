@@ -18,13 +18,12 @@ Make sure you have Node.js installed on your system. You can download it from [N
 ### Installation
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/pickeat-pickpen.git
-    cd pickeat-pickpen
+    git clone [https://github.com/yourusername/pickeat-pickpen.git](https://github.com/yechankim0531/pickeatSurvey.git)
     ```
 
-2. Install the required dependencies:
+2. Install Express.JS:
     ```sh
-    npm install
+    npm install express
     ```
 
 ### Running the Server
